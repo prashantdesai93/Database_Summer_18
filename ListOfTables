@@ -1,0 +1,18 @@
+Clients
+  ClientID
+  FName
+  LName
+  MI
+  Address
+  Zipcode
+  City
+  State
+  HomePhone
+  MobilePhone
+  Email
+  PreferedContact
+  NumberOfPets
+  
+Pets
+  PetID
+  ClientID
