@@ -1,0 +1,48 @@
+-- Following procedure is intended when creating an account for an individual that only wishes to be a tech
+-- Majority or the data is added to the person table with additional data added to the tech table. This
+-- procedure ensures that the new tech recieves the same PersonID in both the person and tech table.
+
+DELIMITER |
+CREATE PROCEDURE AddNewTECH (
+IN NewFName VARCHAR(45),
+IN NewLName VARCHAR(45),
+IN NewPreferredContact VARCHAR(5),
+IN NewStreetName VARCHAR(50),
+IN NewApartment VARCHAR(10),
+IN NewZipcode INT,
+IN NewCity VARCHAR(45),
+IN NewCounty VARCHAR(45),
+IN NewPhone VARCHAR(10),
+IN NewEmail VARCHAR(50),
+IN NewPassword VARCHAR(50),
+IN NewSSN VARCHAR(9),
+IN NewTitle VARCHAR(45),
+IN NewCertified TINYINT(1),
+IN NewAvailable VARCHAR(45),
+IN NewPreference VARCHAR(4))
+
+BEGIN
+	SET @NewPersonID = ((SELECT MAX(PersonID) FROM person)+1),
+	@NewFName = NewFName,
+	@NewLName = NewLName,
+	@NewPreferredContact = NewPreferredContact,
+	@NewStreetName = NewStreetName,
+	@NewApartment = NewApartment,
+	@NewZipcode = NewZipcode,
+	@NewCity = NewCity,
+	@NewCounty = NewCounty,
+	@NewPhone = NewPhone,
+	@NewEmail = NewEmail,
+	@NewPassword = NewPassword,
+  	@NewSSN = NewSSN,
+  	@NewTitle = NewTitle,
+  	@NewCertified = NewCertified,
+  	@NewAvailable = NewAvailable,
+  	@NewPreference = NewPreference;
+	SET SQL_SAFE_UPDATES = 0;
+	INSERT INTO person (PersonID,FName,LName,PreferredContact,StreetName,Apartment,Zipcode,City,County,State,Phone,Email,Password)
+	VALUES (@NewPersonID,@NewFName,@NewLName,@NewPreferredContact,@NewStreetName,
+	@NewApartment,@NewZipcode,@NewCity,@NewCounty,'NC',@NewPhone,@NewEmail,@NewPassword);
+	INSERT INTO tech (PersonID,SSN,Title,Certified,Available,DateHired,Preference)
+	VALUES (@NewPersonID,@NewSSN,@NewTitle,@NewCertified,@NewAvailable,CURDATE(),@NewPreference);
+END;

@@ -1,0 +1,48 @@
+                                                        Team Rover Project Scope
+                                                        
+Project Team (ordered by last name):
+    •	Robert Alexander
+    •	Eshan Bhatt
+    •	Taylor Conners
+    •	Prashant Ravindra Desai
+    •	Kyle Murphy
+    •	Sneha Ramesh Watharkar
+    
+Project Justification:
+	Dr. William Patel is determined to create a service that allows individuals with pets to leave them in the care of people that have
+    above average experience and certification. This service is aimed at individuals with pets that have medical needs or require
+    additional attention as well as general needs.
+
+
+	To make this service feasible Dr. Patel will need to create a database that can handle the list of technicians, clients, and their
+    pets. A user interface will be needed that allows Dr. Patel and his associates to add, delete, and update information on techs,
+    clients, and their pets. The interface will also need to allow clients to join and book a time.
+    
+Project Objectives:
+Objective components will have 1 – 2 leads, but will receive feedback from the entire group before delivery  
+
+
+1)	Database Development (Deadline June 11th)
+    a.	Business rules – in progress
+    b.	Enhanced entity relationship diagram – in progress
+        i.	Leads – Robert Alexander & Taylor Conners
+    c.	Schema – in progress
+
+
+2)	Database Implementation (Deadline June 18th)
+    a.	Normalization of data
+    b.	Uploading of data to appropriate tables
+    c.	Database testing
+    d.	View creation
+        i.	List of techs
+        ii.	List of clients
+        iii.	List of pets
+        iv.	Available Schedule
+        v.	Booked services
+
+
+3)	User Interface (Deadline June 25th)
+    a.	Linked to database
+    b.	Set up for admin and user roles
+    c.	Allows for adding, deleting, and updating database
+    d.	Allows for clients to view services and create orders

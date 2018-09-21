@@ -1,0 +1,9 @@
+CREATE VIEW ClientList AS
+SELECT
+ClientID AS 'Client ID',
+FName AS 'First Name',
+LName AS 'Last Name',
+NumberOfPets AS 'Number of Pets',
+DateJoined AS 'Joined on' 
+FROM client,person
+WHERE client.PersonID = person.PersonID;

@@ -1,0 +1,26 @@
+-- This procedure will create a new discount with the type for students, then update the client table by assigning the DiscountID
+-- to the correct client using thier email. Informatin about the student's school, major, and graduation date will be added to
+-- the studentdiscount table.
+
+DELIMITER |
+CREATE PROCEDURE add_student (
+	IN StudentEmail VARCHAR(50),
+	IN SchoolName VARCHAR(50),
+	IN GraduationDate DATE,
+	IN Major VARCHAR(50))
+	
+BEGIN
+	SET @StudentEmail = StudentEmail,
+  @SchoolName = SchoolName,
+  @GraduationDate = GraduationDate,
+  @Major = Major,
+	@NewDiscountID = ((SELECT MAX(DiscountID) FROM discounts)+1);
+  SET SQL_SAFE_UPDATES = 0;
+	INSERT INTO discounts(DiscountID,DiscountType,DiscountAmount)
+	VALUES (@NewDiscountID,'STUDENT', 10);
+	UPDATE client 
+	SET DiscountID = @NewDiscountID
+	WHERE client.PersonID = (SELECT PersonID FROM person WHERE Email = @StudentEmail);
+	INSERT INTO studentdiscount(DiscountID,Major,GraduationDate,SchoolName)
+	VALUES (@NewDiscountID,@Major,@GraduationDate,@SchoolName);
+END|

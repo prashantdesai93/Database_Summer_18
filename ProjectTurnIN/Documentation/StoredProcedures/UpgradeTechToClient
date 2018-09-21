@@ -1,0 +1,15 @@
+-- This procedure allows the admin to allow a current tech to become a client. Since it is easiest to get the tech's
+-- email that will be used to get their PersonID. New information will be added to the client table, with person, tech,
+-- and client tables using the same PersonID for the same individual.
+
+DELIMITER |
+CREATE PROCEDURE UpgradeTechToClient (
+IN TechEmail VARCHAR(50))    
+
+BEGIN
+	SET @TechEmail = TechEmail,
+	@PersonID = (SELECT PersonID FROM person WHERE person.Email = @TechEmail);
+	SET SQL_SAFE_UPDATES = 0;
+	INSERT INTO client (PersonID,DateJoined)
+	VALUES (@PersonID,CURDATE());
+END;

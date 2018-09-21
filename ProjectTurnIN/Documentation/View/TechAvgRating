@@ -1,0 +1,12 @@
+-- This view will allow the average rating of a tech to be displayed as well as how many
+-- ratings they recieved.
+
+CREATE VIEW techAvgRatings AS
+SELECT
+CONCAT(FName,' ',LName) AS 'Tech\'s Name',
+AVG(ratings.Rating) AS 'Average Rating',
+COUNT(ratings.Rating) AS 'Number of Ratings'
+FROM tech INNER JOIN person ON tech.PersonID = person.PersonID, orders, ratings
+WHERE tech.TechID = orders.TechID
+AND orders.OrderID = ratings.OrderID
+GROUP BY tech.TechID;

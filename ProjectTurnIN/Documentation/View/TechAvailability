@@ -1,0 +1,47 @@
+-- This view will create a table showing what days of the week the tech is available.
+-- Tech's that watch both cats and dogs are shown first.
+
+CREATE VIEW TechAvailability AS
+SELECT
+TechID AS 'Tech ID',
+FName AS 'First Name',
+LName AS 'Last Name',
+CASE
+	WHEN Available LIKE '%MON%' OR Available = 'ALL'
+		THEN 'X'
+		ELSE ''
+	END AS 'Monday',
+CASE
+	WHEN Available LIKE '%TUE%' OR Available = 'ALL'
+		THEN 'X'
+		ELSE ''
+	END AS 'Tuesday',
+CASE
+	WHEN Available LIKE '%WED%' OR Available = 'ALL'
+		THEN 'X'
+		ELSE ''
+	END AS 'Wednesday',
+CASE
+	WHEN Available LIKE '%THU%' OR Available = 'ALL'
+		THEN 'X'
+		ELSE ''
+	END AS 'Thursday',
+CASE
+	WHEN Available LIKE '%FRI%' OR Available = 'ALL'
+		THEN 'X'
+		ELSE ''
+	END AS 'Friday',
+CASE
+	WHEN Available LIKE '%SAT%' OR Available = 'ALL'
+		THEN 'X'
+		ELSE ''
+	END AS 'Saturday',
+CASE
+	WHEN Available LIKE '%SUN%' OR Available = 'ALL'
+		THEN 'X'
+		ELSE ''
+	END AS 'Sunday',
+Preference
+FROM person,tech
+WHERE tech.PersonID = person.PersonID
+ORDER BY Preference;

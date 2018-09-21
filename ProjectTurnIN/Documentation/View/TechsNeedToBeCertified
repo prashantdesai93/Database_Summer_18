@@ -1,0 +1,9 @@
+CREATE VIEW NeedToBeCertified AS
+SELECT
+TechID AS 'Tech ID',
+FName AS 'First Name',
+LName AS 'Last Name',
+DateHired AS 'Hired On'
+FROM person,tech
+WHERE tech.PersonID = person.PersonID
+AND Certified = 0;

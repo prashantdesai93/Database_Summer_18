@@ -1,0 +1,26 @@
+-- This procedure will create a new discount with the type for teacher, then update the client table by assigning the DiscountID
+-- to the correct client using thier email. Informatin about the teacher's school, position, and if they are a coach will be
+-- added to the teacherdiscount table.
+
+DELIMITER |
+CREATE PROCEDURE add_teacher (
+IN teacherEmail VARCHAR(50),
+IN SchoolName VARCHAR(50),
+IN Position DATE,
+IN Coach VARCHAR(50))
+	
+BEGIN
+	SET @StudentEmail = StudentEmail,
+  @SchoolName = SchoolName,
+  @Position = Position,
+  @Coach = Coach,
+	@NewPetID = ((SELECT MAX(PetID) FROM discounts)+1);
+  SET SQL_SAFE_UPDATES = 0;
+	INSERT INTO discounts(DiscountID,DiscountType,DiscountAmount)
+	VALUES (@NewDiscountID,'STUDENT', 10);
+	UPDATE client 
+	SET DiscountID = @NewDiscountID
+	WHERE client.PersonID = (SELECT PersonID FROM person WHERE Email = @StudentEmail);
+	INSERT INTO teacherdiscount(DiscountID,SchoolName,Position,Coach)
+	VALUES (@NewDiscountID,@SchoolName,@Position,@Coach);
+END|

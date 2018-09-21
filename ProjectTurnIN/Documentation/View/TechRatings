@@ -1,0 +1,14 @@
+-- Creates a view that shows The tech's name, their rating, who rated (the rater can put whatever they want
+-- for privacy reasons), the comment they want to make, and the date it was submitted.
+
+CREATE VIEW techRatings AS
+SELECT
+CONCAT(FName,' ',LName) AS 'Tech\'s Name',
+orders.StartDate AS 'Service Date',
+ratings.Rating AS 'Rating',
+RaterComment AS 'Comment',
+ratings.Rater AS 'Rated By',
+CURDATE() AS 'Rated On'
+FROM tech INNER JOIN person ON tech.PersonID = person.PersonID, orders, ratings
+WHERE tech.TechID = orders.TechID
+AND orders.OrderID = ratings.OrderID;

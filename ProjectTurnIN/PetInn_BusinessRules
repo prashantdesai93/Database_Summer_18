@@ -1,0 +1,10 @@
+Business Rules: 
+
+1. One owner can have one to many pets, but pets can have one and only one owner.
+2. One customer can order many services.
+3. An order can have one to many services.
+4. Discounts will be given to customers who are teachers and students. A customer can only recieve one type of discount.
+5. One order can have one and only one technician.
+6. One technician can have zero to many ratings, but each rating is uniquely associated with one technician.
+7. Customers can be technicians and technicians can be customers.
+8. A pet can have zero to many special needs, but each special need is uniquely assoicated to one pet.

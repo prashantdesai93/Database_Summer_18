@@ -1,0 +1,25 @@
+-- This view will create a list of the orders and the tech's who are responsible for them. They will have
+-- information on the client's address and pet. Since an order can have multiple services, services are concatenated
+-- into a single row for easier reading.
+
+CREATE VIEW TechTasksByOrder AS
+SELECT
+orders.OrderID AS 'Order ID',
+(SELECT CONCAT(FName,' ',LName) FROM person
+	WHERE person.PersonID = (SELECT PersonID FROM tech
+    WHERE tech.TechID = orders.TechID))  AS 'Tech\'s Name',
+(SELECT CONCAT(FName,' ',LName) FROM person
+	WHERE person.PersonID = (SELECT PersonID FROM pet
+	WHERE pet.PetID = orders.PetID)) AS 'Client\'s Name',
+(SELECT StreetName FROM person
+	WHERE person.PersonID = (SELECT PersonID FROM pet
+	WHERE pet.PetID = orders.PetID)) AS 'Client\'s Address',
+(SELECT CONCAT(PetName,' (',PetType,')') FROM pet
+	WHERE pet.PetID = orders.PetID) AS 'Pet\'s Name',
+GROUP_CONCAT(DISTINCT ServiceType SEPARATOR ', ') AS 'Duty',
+StartDate AS 'Start Order',
+EndDate AS 'End Order'
+FROM services,orders,orderservices,person,tech
+WHERE services.ServiceID = orderservices.ServiceID
+AND orders.OrderID = orderservices.OrderID
+GROUP BY orders.OrderID;

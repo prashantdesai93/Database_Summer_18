@@ -1,0 +1,27 @@
+-- These triggers will count the number of pets that each client has.
+
+-- TRIGGER FOR WHEN ADDING PET--
+DROP TRIGGER IF EXISTS ADDPET;
+DELIMITER |
+CREATE TRIGGER ADDPET
+AFTER INSERT ON pet
+FOR EACH ROW
+BEGIN
+	UPDATE client
+		SET NumberOfPets =
+        (SELECT COUNT(PetID) 
+		FROM pet,person WHERE client.PersonID = pet.PersonID = person.PersonID
+		GROUP BY ClientID);;
+END |
+
+-- TRIGGER FOR WHEN DROPPING A PET--
+DROP TRIGGER IF EXISTS DROPPET;
+DELIMITER |
+CREATE TRIGGER DROPPET
+AFTER DELETE ON pet
+FOR EACH ROW
+BEGIN
+	UPDATE client
+		SET NumberOfPets =
+        (SELECT COUNT(*) FROM worker WHERE worker.departmentName = dept.departmentName);
+END |

@@ -1,0 +1,20 @@
+-- This procedure allows clients to give feedback if they have the order id. They do not have to use their full name
+-- for the rater for privacy reasons.
+
+DELIMITER |
+CREATE PROCEDURE add_rating(
+	IN NewOrderID INT,
+	IN NewRating INT,
+	IN NewRater VARCHAR(45),
+	IN NewRaterComment VARCHAR(255))
+	
+BEGIN
+	SET @NewRateingID = ((SELECT MAX(RateingID) FROM ratings) +1),
+	@NewOrderID = NewOrderID,
+	@NewRating = NewRating,
+	@NewRater = NewRater,
+	@NewRaterComment = NewRaterComment;
+	SET SQL_SAFE_UPDATES = 0;
+	INSERT INTO ratings(RateingID,OrderID,Rating,Rater,RaterComment)
+	VALUES (@NewRateingID,@NewOrderID,@NewRating,@NewRater,@NewRaterComment);
+END;

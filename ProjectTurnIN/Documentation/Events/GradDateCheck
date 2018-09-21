@@ -1,0 +1,17 @@
+-- This event will check the graduation dates in the studentdiscount table
+-- Every day and compare it to the date, if they have graduated the discount will be
+-- removed.
+
+CREATE EVENT checkGradDates
+	ON SCHEDULE EVERY 1 DAY
+    DO
+		UPDATE client
+		SET DiscountID = null
+		WHERE (
+    SELECT GraduationDate FROM studentdiscount 
+    WHERE client.DiscountID = studentdiscount.DiscountID) < CURDATE();
+		DELETE FROM studentdiscount
+		WHERE GraduationDate < CURDATE();
+		DELETE FROM discounts
+		WHERE discounts.DiscountID NOT IN (SELECT DiscountID FROM studentdiscount)
+    AND discounts.DiscountID NOT IN (SELECT DiscountID FROM teacherdiscount);

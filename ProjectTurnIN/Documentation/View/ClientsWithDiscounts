@@ -1,0 +1,10 @@
+CREATE VIEW ClientsWithDiscounts AS
+SELECT
+ClientID AS 'Client ID',
+FName AS 'First Name',
+LName AS 'Last Name',
+DiscountType AS 'Discount Type',
+DiscountAmount AS 'Discount Amount (%)',
+NumberOfPets AS '# of Pets'
+FROM (client INNER JOIN person ON person.PersonID = client.PersonID),discounts
+WHERE client.DiscountID = discounts.DiscountID;

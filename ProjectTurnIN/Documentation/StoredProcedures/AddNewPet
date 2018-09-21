@@ -1,0 +1,29 @@
+-- This procedure uses the client's email to find the PersonID since it is likely that the client or admin will
+-- have easier access to the client's email than the PersonID. Not only can a new data be added with this, the
+-- needs for that pet can also be included and applied to the specialneeds table.
+
+DELIMITER |
+CREATE PROCEDURE add_pet (
+	IN ClientEmail VARCHAR(50),
+	IN NewPetName VARCHAR(45),
+	IN NewPetType VARCHAR(3),
+	IN NewGender VARCHAR(1),
+  IN NewSize VARCHAR(2),
+  IN NewNeed VARCHAR(255))    
+	
+BEGIN
+	SET @ClientEmail = ClientEmail,
+  @ClientID = (SELECT PersonID FROM person WHERE person.Email = @ClientEmail),
+  @PetName = NewPetName,
+  @PetType = NewPetType,
+  @Gender = NewGender,
+	@NewPetID = ((SELECT MAX(PetID) FROM pet)+1),
+  @Size = NewSize,
+  @NewNeedsID = ((SELECT MAX(NeedsID) FROM specialneeds)+1),
+  @NewNeed = NewNeed;
+  SET SQL_SAFE_UPDATES = 0;
+	INSERT INTO pet(PetID,PersonID,PetName,PetType,Gender,Size)
+	VALUES (@NewPetID,@ClientID,@PetName,@PetType,@Gender,@Size);
+	INSERT INTO specialneeds(NeedsID,PetID,NeedDescription)
+  VALUES (@NewNeedsID,@NewPetID,@NewNeed);
+END;
